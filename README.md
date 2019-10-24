@@ -1,4 +1,4 @@
-# Twitter-Data-Analysis-Shiny-App
+# Social Media Observatory - Twitter Mining and Analysis Suite [SMO-TMAS]
 A Shiny app that makes it easy for non-technical users to scrape and analyze Twitter data.
 
 This app was created by Jason Young for basic Twitter data harvesting and analysis. It gathers public data from Twitter's REST API by querying the GET statuses/user_timeline endpoint with the twitteR package.
