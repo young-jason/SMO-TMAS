@@ -35,7 +35,7 @@ if(!require('RColorBrewer')) install.packages('RColorBrewer')
 library('RColorBrewer') #color palettes used for word cloud
 
 
-# shiny related
+# shiny related library
 if(!require('shiny')) install.packages('shiny')
 library('shiny')
 if(!require('shinydashboard')) install.packages('shinydashboard')
@@ -44,7 +44,6 @@ if(!require('DT')) install.packages('DT')
 library('DT') #creating interactive tables that can display on HTML pages
 if(!require('crosstalk')) install.packages('crosstalk')
 library('crosstalk')
-
 
 # Twitter authentication
 token <- create_token(
@@ -190,7 +189,8 @@ top_hashtags <- function(temp_tweets){
   topgat_fcm <- fcm_select(tag_fcm, pattern = toptag)     # Selecting the top 50 hashtags  
   hashtag_network <- textplot_network(topgat_fcm, min_freq = 0.1, edge_alpha = 0.8, edge_size = 5) # Visualizing Network
   return(hashtag_network)
-}   
+}  
+
 ####  1) UI Component ####  
 ui <- fluidPage(
   # title
@@ -326,8 +326,7 @@ ui <- fluidPage(
       box(h3("Hashtag Network"), align = 'center', plotOutput(outputId = "hashtag_network")),
       p(em("Edges in the above semantic networks show co-occurrences of the 50 most frequently mentioned users and hashtags"), align = 'center', style='font-size:10pt')
   ))
-
-        )
+  )
     )
       ))
 ### 2) Server Component ###
@@ -335,36 +334,36 @@ server <- function(input, output, ...){
   
   #### User Tweets
   observeEvent(input$click, {
-    # defining user handle and sample size
+    # Defining user handle and sample size
     handle <- isolate({as.character(input$twitter_handle)})
     sample_size <- isolate({input$tweet_num})
     
-    # pulling tweets
+    # Pulling tweets
     temp_tweets <- reactive({
       pull_tweets(handle, sample_size)
     })
     
-    # bar chart depicting the days of the week that the tweets were created
+    # Creating bar chart depicting the days of the week that the tweets were created
     output$tweets_per_day <- renderPlotly({
       tweets_per_day(temp_tweets())
     })
     
-    # line plot depicting the time at which the tweets were created
+    # Creating line plot depicting the time at which the tweets were created
     output$tweets_per_hour <- renderPlotly({
       tweets_per_hour(temp_tweets())
     })
     
-    #histogram depicting the distributions of the retweet count and favorited count metrics
+    # Creating histogram depicting the distributions of the retweet count and favorited count metrics
     output$metric_histograms <- renderPlotly({
       distributions(temp_tweets())
     })
     
-    # pie graph depicting the source from which the tweets were sent:
+    # Creating pie graph depicting the source from which the tweets were sent:
     output$tweet_source <- renderPlotly({
       tweet_source(temp_tweets())
     })
     
-    # Create table of scraped Tweets
+    # Creating table of scraped Tweets
     m <- temp_tweets() %>% 
       tibble::rownames_to_column()
     d <- SharedData$new(m, ~rowname)
@@ -386,58 +385,59 @@ server <- function(input, output, ...){
                                          save_as_csv(temp_tweets(), file)
                                        })
     
-    
-    # word cloud
+    # Creating word cloud
     output$tweets_cloud <- renderPlot({
       tweets_cloud(temp_tweets())
     })
-    # frequency table
+    
+    # Creating frequency table
     output$x2 <- DT::renderDataTable({
       word_frequency(temp_tweets())
     })
-  #  user network
-  output$user_network <- renderPlot({
-    top_users(temp_tweets())
-  })
-  # hashtag network
-  output$hashtag_network <- renderPlot({
-    top_hashtags(temp_tweets())
-  })
-})  
-  
+    
+    # Creating user network
+    output$user_network <- renderPlot({
+      top_users(temp_tweets())
+      })
+    
+    # Creating hashtag network
+    output$hashtag_network <- renderPlot({
+      top_hashtags(temp_tweets())
+      })
+    })  
   
   #### Topic Tweets
   observeEvent(input$click2, {
-    # defining topic and sample size
+    # Defining topic and sample size
     handle <- isolate({as.character(input$twitter_topic)})
     sample_size <- isolate({input$topic_num})
     
-    # pulling topics
+    # Pulling topics tweets
     temp_tweets <- reactive({
       pull_topics(handle, sample_size)
     })
     
-    # bar chart depicting the days of the week that the tweets were created
+    # Creating bar chart depicting the days of the week that the tweets were created
     output$tweets_per_day <- renderPlotly({
       tweets_per_day(temp_tweets())
     })
     
-    # line plot depicting the time at which the tweets were created
+    # Creating line plot depicting the time at which the tweets were created
     output$tweets_per_hour <- renderPlotly({
       tweets_per_hour(temp_tweets())
     })
     
-    #histogram depicting the distributions of the retweet count and favorited count metrics
+    # Creating histogram depicting the distributions of the retweet count and favorited count metrics
     output$metric_histograms <- renderPlotly({
       distributions(temp_tweets())
     })
     
-    # pie graph depicting the source from which the tweets were sent:
+    # Creating pie graph depicting the source from which the tweets were sent
     output$tweet_source <- renderPlotly({
       tweet_source(temp_tweets())
     })
     
-    # Create table of scraped Tweets
+    # Creating table of scraped Tweets
     m <- temp_tweets() %>% 
       tibble::rownames_to_column()
     d <- SharedData$new(m, ~rowname)
@@ -453,30 +453,33 @@ server <- function(input, output, ...){
                         backgroundColor = DT::styleEqual(m2$rowname, rep("blue", length(m2$rowname))))
       }
     })
+    
     #Download table as .csv and creating a function to use input twitter handle and system date as file name
     output$download <- downloadHandler(filename = function() {paste(input$twitter_topic, Sys.Date(), '.csv', sep="_")},
                                        content = function(file){
                                          save_as_csv(temp_tweets(), file)
                                        })
-    # word cloud
+    # Creating word cloud
     output$tweets_cloud <- renderPlot({
       tweets_cloud(temp_tweets())
     })
-    # frequency table
+    
+    # Creating frequency table
     output$x2 <- DT::renderDataTable({
       word_frequency(temp_tweets())
     })
-    #  user network
+    
+    # Creating user network
     output$user_network <- renderPlot({
       top_users(temp_tweets())
     })
-    # hashtag network
+    
+    # Creating hashtag network
     output$hashtag_network <- renderPlot({
       top_hashtags(temp_tweets())
-    })
+      })
   })
-}
-
+  }
 
 ### 3) shinyApp component ###
 shinyApp(ui = ui, server = server)
