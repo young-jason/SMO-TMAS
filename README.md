@@ -9,4 +9,4 @@ Importing a copy of the code into R will not result in a functioning app, unless
 
 Instructions to produce personal keys for the Twitter authentication are available at: https://iag.me/socialmedia/how-to-create-a-twitter-app-in-8-easy-steps/
 
-A detailed tutorial can be found in the Wiki of this repository.
+A detailed tutorial can be found in the [Wiki](https://github.com/Leibniz-HBI/SMO-TMAS/wiki) of this repository.
