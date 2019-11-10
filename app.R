@@ -44,7 +44,7 @@ library('shiny')
 if(!require('shinydashboard')) install.packages('shinydashboard')
 library('shinydashboard')
 
-# Twitter authentication
+# Twitter authentication <- Insert app keys into the PLACEHOLDERS
 token <- create_token(
   app = "PLACEHOLDER",
   consumer_key = "PLACEHOLDER",
