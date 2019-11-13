@@ -43,6 +43,8 @@ if(!require('shiny')) install.packages('shiny')
 library('shiny')
 if(!require('shinydashboard')) install.packages('shinydashboard')
 library('shinydashboard')
+if(!require('shinyWidgets')) install.packages('shinyWidgets')
+library('shinyWidgets') # get Custom Inputs Widgets for Shiny 
 
 # Twitter authentication <- Insert app keys into the PLACEHOLDERS
 token <- create_token(
@@ -223,7 +225,6 @@ ui <- fluidPage(
                  textInput(
                    inputId = "twitter_handle",
                    label = "Enter a Twitter Handle",
-                   width = 200,
                    value = "BredowInstitut"      
                  ),
                  # slider input
@@ -231,23 +232,22 @@ ui <- fluidPage(
                    inputId = "tweet_num",
                    label = "Number of Tweets",
                    min = 0, max = 3200,
-                   value = 1600,
-                   width = 200
+                   value = 1600
                  ),
                  # action button to scrape users
-                 actionButton(
+                 actionBttn(
                    inputId = "click",
-                   width = 175,
                    label = ("Collect user timelines"),
+                   block =T,
+                   size = "xs",
                    icon = icon("users", lib = "font-awesome")
-                 ),
+                   ),
                  # Search tweets
                  h3("Search Tweets", align = "center"),
                  # text input for keywords / hashtags 
                  textInput(
                    inputId = "twitter_topic",
                    label = ("Enter a Keyword"),
-                   width = 200,
                    value = "LeibnizWGL"
                  ),
                  # slider input
@@ -255,14 +255,14 @@ ui <- fluidPage(
                    inputId = "topic_num",
                    label = "Number of Tweets",
                    min = 0, max = 18000,
-                   value = 9000,
-                   width = 200
-                 ),
+                   value = 9000                 
+                   ),
                  # action button to scrape hashtags
-                 actionButton(
+                 actionBttn(
                    inputId = "click2",
-                   width = 175,
-                   label = ("Collect tweets from"), br("the past 6-9 days"),
+                   label = HTML("Collect tweets from <br/> the past 6-9 days"),
+                   block =T,                      # use HTML to include line break
+                   size = "xs",
                    icon = icon("hashtag", lib = "font-awesome")
                  ),
                  h3("Stream Tweets", align = "center"),
@@ -270,7 +270,6 @@ ui <- fluidPage(
                  textInput(
                    inputId = "stream_topic",
                    label = "Enter a Keyword",
-                   width = 300,
                    value = "NBA"
                  ),
                  # slider input
@@ -281,10 +280,11 @@ ui <- fluidPage(
                    value = 20
                  ),
                  # action button to scrape live tweets
-                 actionButton(
+                 actionBttn(
                    inputId = "click3",
-                   width = 175,
                    label = ("Collect live tweets"), 
+                   block =T,
+                   size = "xs",
                    icon = icon("hashtag", lib = "font-awesome")        
                  )
     ),
