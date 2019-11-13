@@ -1,8 +1,8 @@
 ## Social Media Observatory - Twitter Mining and Analysis Suite [SMO-TMAS]
 
-SMO-TMAS is a simple Shiny app that makes it easy to collect, analyze and interpret small Twitter data sets. 
+SMO-TMAS is a simple Shiny app that makes it easy to collect and analyze small Twitter data sets. 
 
-SMO-TMAS allows users to pull tweets of specified Twitter handles and tweets containing specified keywords by querying Twitter's REST API GET search/tweets endpoint and statuses/user_timeline endpoint as well as Twitter's STREAM API. The collected tweets can be downloaded as .csv file and SMO-TMAS also provides data analysis components that can be used to analyze and visualize the collected data right away. The complete source code for the app can be found in the public SMO-TMAS repository with a MIT developer license.
+SMO-TMAS allows users to pull tweets of specified Twitter handles and tweets containing specified keywords by querying Twitter's REST API GET search/tweets endpoint and statuses/user_timeline endpoint as well as Twitter's STREAM API. The collected tweets can be downloaded as .csv file and SMO-TMAS also provides data analysis components that can be used to analyze and visualize the collected data right away.
 
 SMO-TMAS is suitable for exploratory data analysis of small Twitter data sets (≈18,000 tweets or 3,200 user statuses). The big plus of SMO-TMAS is it’s easy use, which allows researcher without any prior computing knowledge to get first insights into Twitter data with the simple click of a button. In addition, the source code is fully transparent and available for free for customization and further development.
 
